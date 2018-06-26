@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Products</h1>
+
+<table>
+    <tbody>
+    <% @products.each do |product| %>
+      <tr class="<%= cycle('list_line_odd', 'list_line_even')%>">
+        <td class="other">
+        <%= image_tag(product.image, size: "110x110") %>
+        </td>
+        <td class="list_description">
+            <dl>
+                <dt><%= product.name %></dt>
+                <dd>
+                    <%= product.description %>
+                <br><br>
+                    <%= product.price %>
+                </dd>
+            </dl>
+        </td>
+
+        <td class="list_actions">
+            <%= link_to 'Show', product %>
+            <%= link_to 'Edit', edit_product_path(product) %>
+            <%= link_to 'Destroy', product, method: :delete, data: { confirm: 'Are you sure?' } %>
+        </td>
+      </tr>
+    <% end %>
+</table>
+
+<br>
+
+<%= link_to 'New Product', new_product_path %>
+

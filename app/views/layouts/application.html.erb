@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Online Book Store</title>
+<%= stylesheet_link_tag 'application', media: 'all','data-turbolinks-track'=>true %>
+<%= javascript_include_tag 'application','data-turbolinks-track'=>true %>
+<%= csrf_meta_tags %>
+</head>
+
+<body class='<%= controller.controller_name %>'>
+<div id="banner">
+<%= image_tag("image_4.jpg") %>
+<%= @page_title || " BOOK STORE " %>
+
+<form>
+<input type="text" name="searchName" placeholder="Search by Name">
+<input type="text" name="searchDescription" placeholder="Search by Description">
+<input type="text" name="searchPrice" placeholder="Search Price">
+<button type="Submit">Search</button>
+  <% if session[:user_id] %>
+
+
+    <% else %>
+    <button><a href="/login" class="admin-login">Admin Login</a></button>
+    <%end %>
+
+</form>
+</div>
+
+<div id="columns">
+<div id="side">
+
+
+<div id='cart'>
+ <% unless @cart.blank? %>
+<%= render(@cart) %>
+<% end %>
+</div>
+<ul>
+
+
+</ul>
+
+<% if session[:user_id] %>
+<ul>
+  <li><a href="/shopper/index">Home</a></li>
+<li><%= link_to 'Orders',   orders_path   %></li>
+<li><%= link_to 'Products', products_path %></li>
+<li><%= link_to 'Users',    users_path    %></li>
+</ul>
+<%= button_to 'Logout', logout_path, method: :delete   %>
+  <% else %>
+    <ul>
+
+      <li><a href="/shopper/index">Home</a></li>
+      <li><a href="/products/questions">Questions</a></li>
+      <li><a href="/products/news">News</a></li>
+      <li><a href="/products/contact">Contact</a></li>
+    </ul>
+<% end %>
+
+</div>
+<div id="main">
+<%= yield %>
+</div>
+</div>
+</body>
+</html>
